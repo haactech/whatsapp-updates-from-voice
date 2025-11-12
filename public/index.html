@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Publicar en Redes Sociales</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 600px;
+            width: 100%;
+            padding: 40px;
+        }
+
+        h1 {
+            color: #333;
+            font-size: 2em;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 1.1em;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .status-indicator {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 30px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .status-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9em;
+        }
+
+        .status-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #dc3545;
+        }
+
+        .status-dot.active {
+            background: #28a745;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .step {
+            margin-bottom: 30px;
+        }
+
+        .step-title {
+            font-size: 1.3em;
+            color: #667eea;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .step-number {
+            background: #667eea;
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .file-input-container {
+            position: relative;
+            margin-bottom: 15px;
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        .file-input-label {
+            display: block;
+            padding: 20px;
+            background: #f8f9fa;
+            border: 3px dashed #dee2e6;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1.1em;
+        }
+
+        .file-input-label:hover {
+            background: #e9ecef;
+            border-color: #667eea;
+        }
+
+        .file-preview {
+            margin-top: 15px;
+            text-align: center;
+        }
+
+        .file-preview img {
+            max-width: 100%;
+            max-height: 300px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .voice-controls {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-success {
+            background: #28a745;
+            color: white;
+        }
+
+        .btn-success:hover:not(:disabled) {
+            background: #218838;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.4);
+        }
+
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+        }
+
+        .btn-danger:hover:not(:disabled) {
+            background: #c82333;
+        }
+
+        .btn.recording {
+            background: #dc3545;
+            animation: recording-pulse 1s infinite;
+        }
+
+        @keyframes recording-pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #dee2e6;
+            border-radius: 10px;
+            font-size: 1.1em;
+            font-family: inherit;
+            resize: vertical;
+            min-height: 120px;
+            margin-bottom: 15px;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .platform-selector {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .platform-option {
+            flex: 1;
+            padding: 15px;
+            border: 2px solid #dee2e6;
+            border-radius: 10px;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s;
+            background: white;
+        }
+
+        .platform-option:hover {
+            border-color: #667eea;
+        }
+
+        .platform-option.selected {
+            border-color: #667eea;
+            background: #f0f3ff;
+        }
+
+        .platform-option input {
+            margin-right: 8px;
+        }
+
+        .alert {
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            animation: slideIn 0.3s;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .alert-info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .icon {
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📱 Publicar en Redes Sociales</h1>
+        <p class="subtitle">¿Qué quieres publicar hoy?</p>
+
+        <div class="status-indicator">
+            <div class="status-item">
+                <div class="status-dot" id="whatsapp-status"></div>
+                <span>WhatsApp</span>
+            </div>
+            <div class="status-item">
+                <div class="status-dot" id="facebook-status"></div>
+                <span>Facebook</span>
+            </div>
+        </div>
+
+        <div id="alerts"></div>
+
+        <!-- Paso 1: Subir Foto -->
+        <div class="step">
+            <div class="step-title">
+                <div class="step-number">1</div>
+                <span>Sube una foto</span>
+            </div>
+            <div class="file-input-container">
+                <input type="file" id="imageInput" class="file-input" accept="image/*" capture="environment">
+                <label for="imageInput" class="file-input-label">
+                    <span class="icon">📷</span>
+                    <div>Toca aquí para elegir o tomar una foto</div>
+                </label>
+                <div id="imagePreview" class="file-preview"></div>
+            </div>
+        </div>
+
+        <!-- Paso 2: Grabar o Escribir Texto -->
+        <div class="step">
+            <div class="step-title">
+                <div class="step-number">2</div>
+                <span>Graba tu mensaje o escríbelo</span>
+            </div>
+            <div class="voice-controls">
+                <button id="recordBtn" class="btn btn-primary">
+                    <span class="icon">🎤</span>
+                    <span id="recordText">Grabar Voz</span>
+                </button>
+            </div>
+            <textarea id="messageText" placeholder="O escribe tu mensaje aquí..."></textarea>
+        </div>
+
+        <!-- Paso 3: Elegir Plataformas -->
+        <div class="step">
+            <div class="step-title">
+                <div class="step-number">3</div>
+                <span>¿Dónde quieres publicar?</span>
+            </div>
+            <div class="platform-selector">
+                <label class="platform-option selected">
+                    <input type="checkbox" name="platform" value="whatsapp" checked>
+                    <span class="icon">💚</span> WhatsApp
+                </label>
+                <label class="platform-option selected">
+                    <input type="checkbox" name="platform" value="facebook" checked>
+                    <span class="icon">📘</span> Facebook
+                </label>
+            </div>
+        </div>
+
+        <!-- Paso 4: Publicar -->
+        <div class="step">
+            <button id="publishBtn" class="btn btn-success" disabled>
+                <span class="icon">🚀</span>
+                <span>Publicar Ahora</span>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        let mediaRecorder;
+        let audioChunks = [];
+        let selectedImage = null;
+
+        // Verificar estado de servicios
+        async function checkStatus() {
+            try {
+                const response = await fetch('/api/health');
+                const data = await response.json();
+
+                document.getElementById('whatsapp-status').classList.toggle('active', data.whatsapp);
+                document.getElementById('facebook-status').classList.toggle('active', data.facebook);
+            } catch (error) {
+                console.error('Error al verificar estado:', error);
+            }
+        }
+
+        // Actualizar estado cada 5 segundos
+        setInterval(checkStatus, 5000);
+        checkStatus();
+
+        // Manejo de selección de plataformas
+        document.querySelectorAll('.platform-option').forEach(option => {
+            option.addEventListener('click', function() {
+                this.classList.toggle('selected');
+                const checkbox = this.querySelector('input');
+                checkbox.checked = !checkbox.checked;
+            });
+        });
+
+        // Manejo de imagen
+        document.getElementById('imageInput').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                selectedImage = file;
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('imagePreview').innerHTML =
+                        `<img src="${e.target.result}" alt="Preview">`;
+                };
+                reader.readAsDataURL(file);
+                validateForm();
+            }
+        });
+
+        // Manejo de texto
+        document.getElementById('messageText').addEventListener('input', validateForm);
+
+        // Grabación de voz
+        document.getElementById('recordBtn').addEventListener('click', async function() {
+            if (!mediaRecorder || mediaRecorder.state === 'inactive') {
+                try {
+                    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                    mediaRecorder = new MediaRecorder(stream);
+
+                    mediaRecorder.ondataavailable = (event) => {
+                        audioChunks.push(event.data);
+                    };
+
+                    mediaRecorder.onstop = async () => {
+                        const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+                        audioChunks = [];
+
+                        // Enviar audio para transcripción
+                        await transcribeAudio(audioBlob);
+
+                        // Detener stream
+                        stream.getTracks().forEach(track => track.stop());
+                    };
+
+                    mediaRecorder.start();
+                    this.classList.add('recording');
+                    this.classList.remove('btn-primary');
+                    this.classList.add('btn-danger');
+                    document.getElementById('recordText').textContent = 'Detener Grabación';
+                } catch (error) {
+                    showAlert('No se pudo acceder al micrófono. Verifica los permisos.', 'error');
+                }
+            } else {
+                mediaRecorder.stop();
+                this.classList.remove('recording', 'btn-danger');
+                this.classList.add('btn-primary');
+                document.getElementById('recordText').textContent = 'Grabar Voz';
+            }
+        });
+
+        // Transcribir audio
+        async function transcribeAudio(audioBlob) {
+            const formData = new FormData();
+            formData.append('audio', audioBlob, 'recording.webm');
+
+            try {
+                showAlert('Transcribiendo audio...', 'info');
+                const response = await fetch('/api/transcribe', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    document.getElementById('messageText').value = data.text;
+                    showAlert('Audio transcrito correctamente', 'success');
+                    validateForm();
+                } else {
+                    showAlert('Error al transcribir audio', 'error');
+                }
+            } catch (error) {
+                showAlert('Error al transcribir audio: ' + error.message, 'error');
+            }
+        }
+
+        // Publicar
+        document.getElementById('publishBtn').addEventListener('click', async function() {
+            const messageText = document.getElementById('messageText').value.trim();
+            const selectedPlatforms = Array.from(document.querySelectorAll('input[name="platform"]:checked'))
+                .map(cb => cb.value);
+
+            if (!selectedImage || !messageText || selectedPlatforms.length === 0) {
+                showAlert('Por favor completa todos los campos', 'error');
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('image', selectedImage);
+            formData.append('text', messageText);
+            formData.append('platforms', JSON.stringify(selectedPlatforms));
+
+            try {
+                this.disabled = true;
+                this.innerHTML = '<span class="loading"></span> Publicando...';
+
+                const response = await fetch('/api/publish', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    let message = '¡Publicado exitosamente!';
+                    if (data.results.whatsapp?.success) message += ' ✅ WhatsApp';
+                    if (data.results.facebook?.success) message += ' ✅ Facebook';
+                    showAlert(message, 'success');
+
+                    // Limpiar formulario
+                    setTimeout(() => {
+                        resetForm();
+                    }, 2000);
+                } else {
+                    let errorMsg = 'Error al publicar: ';
+                    if (data.results.whatsapp?.error) errorMsg += `WhatsApp: ${data.results.whatsapp.error}. `;
+                    if (data.results.facebook?.error) errorMsg += `Facebook: ${data.results.facebook.error}.`;
+                    showAlert(errorMsg, 'error');
+                }
+            } catch (error) {
+                showAlert('Error al publicar: ' + error.message, 'error');
+            } finally {
+                this.disabled = false;
+                this.innerHTML = '<span class="icon">🚀</span> Publicar Ahora';
+            }
+        });
+
+        // Validar formulario
+        function validateForm() {
+            const hasImage = selectedImage !== null;
+            const hasText = document.getElementById('messageText').value.trim().length > 0;
+            document.getElementById('publishBtn').disabled = !(hasImage && hasText);
+        }
+
+        // Resetear formulario
+        function resetForm() {
+            selectedImage = null;
+            document.getElementById('imageInput').value = '';
+            document.getElementById('imagePreview').innerHTML = '';
+            document.getElementById('messageText').value = '';
+            validateForm();
+        }
+
+        // Mostrar alertas
+        function showAlert(message, type) {
+            const alertsContainer = document.getElementById('alerts');
+            const alert = document.createElement('div');
+            alert.className = `alert alert-${type}`;
+            alert.textContent = message;
+            alertsContainer.appendChild(alert);
+
+            setTimeout(() => {
+                alert.remove();
+            }, 5000);
+        }
+    </script>
+</body>
+</html>
