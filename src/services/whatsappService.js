@@ -2,6 +2,7 @@ const { Client, LocalAuth } = require('whatsapp-web.js');
 const qrcode = require('qrcode-terminal');
 const fs = require('fs');
 const path = require('path');
+const conversationalBot = require('./conversationalBot');
 
 let client = null;
 let isReady = false;
@@ -44,6 +45,9 @@ async function initialize() {
   client.on('ready', () => {
     console.log('✅ WhatsApp Web está listo!');
     isReady = true;
+
+    // Inicializar el bot conversacional
+    conversationalBot.initializeBot(client);
   });
 
   // Evento: Autenticación exitosa

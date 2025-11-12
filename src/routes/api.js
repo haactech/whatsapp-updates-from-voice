@@ -7,6 +7,7 @@ const fs = require('fs');
 const speechToText = require('../services/speechToText');
 const whatsappService = require('../services/whatsappService');
 const facebookService = require('../services/facebookService');
+const conversationalBot = require('../services/conversationalBot');
 
 // Configurar multer para subir archivos
 const storage = multer.diskStorage({
@@ -35,6 +36,17 @@ router.get('/health', (req, res) => {
     status: 'ok',
     whatsapp: whatsappService.isWhatsAppReady(),
     facebook: facebookService.validateFacebookConfig()
+  });
+});
+
+/**
+ * Endpoint para obtener estadísticas del bot conversacional
+ */
+router.get('/bot/stats', (req, res) => {
+  const stats = conversationalBot.getBotStats();
+  res.json({
+    status: 'ok',
+    bot: stats
   });
 });
 

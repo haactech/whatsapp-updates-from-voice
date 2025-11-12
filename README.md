@@ -4,6 +4,15 @@ Automatización simple para publicar contenido en redes sociales (WhatsApp y Fac
 
 ## 🎯 Características
 
+### 🤖 Bot Conversacional de WhatsApp (NUEVO)
+- ✅ **Asistente por WhatsApp** - Interactúa directamente con tu cuenta de WhatsApp
+- 🎤 **Transcripción de voz automática** - Envía audios de WhatsApp y se transcriben automáticamente
+- 🗣️ **Conversación guiada** - El bot te pregunta paso a paso qué publicar
+- 📸 **Envío de fotos directo** - Envía fotos desde tu WhatsApp normal
+- 🚀 **Publicación automática** - Publica en tu estado sin usar interfaces complicadas
+- 👵 **Ideal para cualquier edad** - Diseñado para ser usado solo con voz y fotos
+
+### 🌐 Interfaz Web (Alternativa)
 - ✅ **Interfaz súper simple y amigable** - Diseñada para ser usada por cualquier persona
 - 🎤 **Grabación de voz** - Dicta tu mensaje y se convierte automáticamente a texto
 - 📷 **Subida de imágenes** - Toma o elige fotos desde tu dispositivo
@@ -99,6 +108,24 @@ La primera vez que inicies la aplicación, necesitas vincular tu WhatsApp:
 
 ## 🎨 Cómo Usar
 
+### 🤖 Opción 1: Bot Conversacional de WhatsApp (Recomendado)
+
+Esta es la forma más fácil - solo usando tu WhatsApp normal:
+
+1. **Inicia la conversación**: Envía "hola" o "publicar" al número de WhatsApp donde está el bot
+
+2. **Envía tu foto**: El bot te pedirá una foto. Envíala desde tu galería o toma una nueva
+
+3. **Envía tu mensaje**:
+   - Graba un **mensaje de voz** con la descripción (el bot lo transcribe automáticamente)
+   - O escribe el texto si prefieres
+
+4. **¡Listo!**: El bot publica automáticamente en tu estado de WhatsApp
+
+**📖 Guía detallada:** Ver [GUIA_ABUELA.md](GUIA_ABUELA.md) para instrucciones paso a paso con ejemplos.
+
+### 🌐 Opción 2: Interfaz Web
+
 1. **Abre tu navegador** y ve a `http://localhost:3000`
 
 2. **Verifica el estado**:
@@ -126,20 +153,22 @@ La primera vez que inicies la aplicación, necesitas vincular tu WhatsApp:
 ```
 whatsapp-updates-from-voice/
 ├── src/
-│   ├── server.js              # Servidor principal
+│   ├── server.js                    # Servidor principal
 │   ├── routes/
-│   │   └── api.js             # Endpoints de la API
+│   │   └── api.js                   # Endpoints de la API
 │   └── services/
-│       ├── speechToText.js    # Servicio de transcripción de voz
-│       ├── whatsappService.js # Integración con WhatsApp
-│       └── facebookService.js # Integración con Facebook
+│       ├── conversationalBot.js     # Bot conversacional de WhatsApp (NUEVO)
+│       ├── speechToText.js          # Servicio de transcripción de voz
+│       ├── whatsappService.js       # Integración con WhatsApp
+│       └── facebookService.js       # Integración con Facebook
 ├── public/
-│   └── index.html            # Interfaz web
-├── uploads/                  # Archivos temporales (auto-generado)
-├── .env                      # Variables de entorno (no incluir en git)
-├── .env.example              # Ejemplo de variables de entorno
-├── package.json              # Dependencias del proyecto
-└── README.md                 # Este archivo
+│   └── index.html                  # Interfaz web
+├── uploads/                        # Archivos temporales (auto-generado)
+├── .env                            # Variables de entorno (no incluir en git)
+├── .env.example                    # Ejemplo de variables de entorno
+├── GUIA_ABUELA.md                  # Guía simple para usar el bot (NUEVO)
+├── package.json                    # Dependencias del proyecto
+└── README.md                       # Este archivo
 ```
 
 ## 🔌 API Endpoints
@@ -153,6 +182,25 @@ Verifica el estado de los servicios.
   "status": "ok",
   "whatsapp": true,
   "facebook": false
+}
+```
+
+### `GET /api/bot/stats`
+Obtiene estadísticas del bot conversacional.
+
+**Respuesta:**
+```json
+{
+  "status": "ok",
+  "bot": {
+    "activeUsers": 2,
+    "users": [
+      {
+        "userId": "5215512345678@c.us",
+        "state": "WAITING_FOR_IMAGE"
+      }
+    ]
+  }
 }
 ```
 
@@ -227,12 +275,15 @@ Publica una imagen con texto en las redes sociales seleccionadas.
 
 ## 📈 Mejoras Futuras
 
+- [x] ~~Bot conversacional de WhatsApp~~ ✅ **IMPLEMENTADO**
+- [x] ~~Transcripción automática de mensajes de voz~~ ✅ **IMPLEMENTADO**
 - [ ] Soporte para Instagram
 - [ ] Programación de publicaciones
 - [ ] Múltiples cuentas de WhatsApp
-- [ ] Plantillas de mensajes
+- [ ] Plantillas de mensajes guardadas
 - [ ] Análisis de engagement
-- [ ] Aplicación móvil nativa
+- [ ] Recordatorios automáticos para publicar
+- [ ] Edición de imágenes básica (filtros, texto)
 
 ## 🤝 Contribuciones
 

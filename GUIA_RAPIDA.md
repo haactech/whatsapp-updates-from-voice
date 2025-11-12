@@ -31,12 +31,38 @@ Pídele a alguien con conocimientos técnicos que:
 
 ## 📱 Cómo Publicar en Redes Sociales
 
-### Paso 1: Preparar tu Foto
+### 🤖 FORMA MÁS FÁCIL: Usar el Bot de WhatsApp (NUEVO)
+
+Esta es la manera más simple - ¡solo usando tu WhatsApp normal!
+
+**Paso 1: Escribir "hola"**
+- Abre WhatsApp
+- Envía el mensaje **"hola"** o **"publicar"** al número del asistente
+
+**Paso 2: Enviar tu foto**
+- El asistente te pedirá una foto
+- Envía la foto de tu producto (desde galería o cámara)
+
+**Paso 3: Enviar tu mensaje**
+- Graba un **mensaje de voz** diciendo qué quieres publicar
+- O escribe el texto si prefieres
+
+**Paso 4: ¡Listo!**
+- El asistente publica automáticamente en tu estado
+- Recibirás una confirmación
+
+**📖 Guía más detallada:** Ver [GUIA_ABUELA.md](GUIA_ABUELA.md)
+
+---
+
+### 🌐 FORMA ALTERNATIVA: Usar la Página Web
+
+#### Paso 1: Preparar tu Foto
 - Toca el botón grande que dice **"Toca aquí para elegir o tomar una foto"**
 - Elige una foto de tu galería o toma una nueva
 - Verás una vista previa de la foto
 
-### Paso 2: Tu Mensaje
+#### Paso 2: Tu Mensaje
 
 **Opción A: Grabar con tu voz** (Recomendado)
 1. Toca el botón **"🎤 Grabar Voz"**
@@ -49,13 +75,13 @@ Pídele a alguien con conocimientos técnicos que:
 2. Escribe tu mensaje
 3. Listo
 
-### Paso 3: Elegir Dónde Publicar
+#### Paso 3: Elegir Dónde Publicar
 - Marca las casillas según donde quieras publicar:
   - 💚 **WhatsApp** - Para tu estado de WhatsApp
   - 📘 **Facebook** - Para tu página de Facebook
 - Puedes elegir uno o ambos
 
-### Paso 4: ¡Publicar!
+#### Paso 4: ¡Publicar!
 - Toca el botón verde grande **"🚀 Publicar Ahora"**
 - Espera unos segundos
 - Verás un mensaje de confirmación
