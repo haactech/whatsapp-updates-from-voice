@@ -31,13 +31,24 @@ function initializeBot(whatsappClient) {
   // Escuchar mensajes entrantes
   console.log('🔧 Registrando listener de mensajes...');
 
-  whatsappClient.on('message', async (message) => {
-    console.log('🔔 EVENTO MESSAGE DISPARADO'); // Log básico para ver si el evento llega
+  // Usar 'message_create' en lugar de 'message' para capturar TODOS los mensajes
+  // incluyendo los que el usuario se envía a sí mismo
+  whatsappClient.on('message_create', async (message) => {
+    console.log('🔔 EVENTO MESSAGE_CREATE DISPARADO'); // Log básico para ver si el evento llega
     try {
       await handleMessage(message);
     } catch (error) {
       console.error('❌ Error al procesar mensaje:', error);
-      await message.reply('❌ Ocurrió un error. Por favor intenta de nuevo escribiendo "hola".');
+
+      // Solo responder si no es nuestro propio mensaje
+      if (!message.fromMe || !message.body || !(
+        message.body.includes('👋 ¡Hola! ¿Qué quieres publicar') ||
+        message.body.includes('✅ ¡Perfecto! Recibí tu foto') ||
+        message.body.includes('🎉 ¡Listo! Tu publicación') ||
+        message.body.includes('❌')
+      )) {
+        await message.reply('❌ Ocurrió un error. Por favor intenta de nuevo escribiendo "hola".');
+      }
     }
   });
 
