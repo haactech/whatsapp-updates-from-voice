@@ -49,11 +49,17 @@ async function handleMessage(message) {
     return;
   }
 
-  // TEMPORAL: Comentado para testing - permitir mensajes propios
-  // TODO: Descomentar esto en producción
-  // if (message.fromMe) {
-  //   return;
-  // }
+  // Permitir mensajes propios (para que el usuario pueda enviarse mensajes a sí mismo)
+  // pero ignorar las respuestas automáticas del bot para evitar loops infinitos
+  if (message.fromMe && message.body && (
+    message.body.includes('👋 ¡Hola! ¿Qué quieres publicar') ||
+    message.body.includes('✅ ¡Perfecto! Recibí tu foto') ||
+    message.body.includes('🎉 ¡Listo! Tu publicación') ||
+    message.body.includes('❌')
+  )) {
+    // Ignorar las respuestas automáticas del bot
+    return;
+  }
 
   const userId = message.from;
   const currentState = userStates.get(userId) || STATES.IDLE;
