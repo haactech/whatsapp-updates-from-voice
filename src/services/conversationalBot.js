@@ -22,6 +22,17 @@ const userData = new Map();
 // Almacenar la función publishStatus para evitar dependencia circular
 let publishStatusFunction = null;
 
+// Almacenar IDs de mensajes ya procesados para evitar duplicados
+const processedMessages = new Set();
+
+// Limpiar mensajes antiguos cada 5 minutos (evitar que el Set crezca infinitamente)
+setInterval(() => {
+  if (processedMessages.size > 1000) {
+    processedMessages.clear();
+    console.log('🧹 Limpiando cache de mensajes procesados');
+  }
+}, 5 * 60 * 1000);
+
 /**
  * Inicializa el bot conversacional
  * @param {Client} whatsappClient - Cliente de WhatsApp
@@ -41,6 +52,18 @@ function initializeBot(whatsappClient, publishStatus) {
   // Usar 'message_create' en lugar de 'message' para capturar TODOS los mensajes
   // incluyendo los que el usuario se envía a sí mismo
   whatsappClient.on('message_create', async (message) => {
+    // Obtener ID único del mensaje
+    const messageId = message.id.id || message.id._serialized;
+
+    // Verificar si ya procesamos este mensaje (evitar duplicados)
+    if (processedMessages.has(messageId)) {
+      console.log(`⏭️  Mensaje duplicado ignorado: ${messageId.substring(0, 20)}...`);
+      return;
+    }
+
+    // Marcar mensaje como procesado
+    processedMessages.add(messageId);
+
     console.log('🔔 EVENTO MESSAGE_CREATE DISPARADO'); // Log básico para ver si el evento llega
     try {
       await handleMessage(message);
