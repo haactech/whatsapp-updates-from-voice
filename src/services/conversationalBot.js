@@ -23,7 +23,10 @@ const userData = new Map();
  * @param {Client} whatsappClient - Cliente de WhatsApp
  */
 function initializeBot(whatsappClient) {
-  console.log('🤖 Inicializando bot conversacional...');
+  console.log('\n🤖 ========================================');
+  console.log('🤖 BOT CONVERSACIONAL INICIADO');
+  console.log('🤖 Esperando mensajes...');
+  console.log('🤖 ========================================\n');
 
   // Escuchar mensajes entrantes
   whatsappClient.on('message', async (message) => {
@@ -34,8 +37,6 @@ function initializeBot(whatsappClient) {
       await message.reply('❌ Ocurrió un error. Por favor intenta de nuevo escribiendo "hola".');
     }
   });
-
-  console.log('✅ Bot conversacional listo');
 }
 
 /**
@@ -55,8 +56,18 @@ async function handleMessage(message) {
 
   const userId = message.from;
   const currentState = userStates.get(userId) || STATES.IDLE;
+  const contact = await message.getContact();
+  const contactName = contact.pushname || contact.number;
 
-  console.log(`📨 Mensaje de ${userId} en estado ${currentState}`);
+  console.log('\n📨 ========================================');
+  console.log(`📨 MENSAJE RECIBIDO`);
+  console.log(`📨 De: ${contactName} (${userId})`);
+  console.log(`📨 Tipo: ${message.type}`);
+  console.log(`📨 Estado actual: ${currentState}`);
+  if (message.body) {
+    console.log(`📨 Contenido: "${message.body.substring(0, 50)}${message.body.length > 50 ? '...' : ''}"`);
+  }
+  console.log('📨 ========================================\n');
 
   // Comando para cancelar el proceso
   if (message.body.toLowerCase().includes('cancelar')) {

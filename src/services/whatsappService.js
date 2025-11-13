@@ -42,9 +42,26 @@ async function initialize() {
   });
 
   // Evento: Cliente listo
-  client.on('ready', () => {
+  client.on('ready', async () => {
     console.log('✅ WhatsApp Web está listo!');
     isReady = true;
+
+    // Mostrar información del número conectado
+    try {
+      const info = client.info;
+      console.log('\n📱 ========================================');
+      console.log('📱 BOT CONECTADO Y ESCUCHANDO MENSAJES');
+      console.log(`📱 Número: ${info.wid.user}`);
+      console.log(`📱 Nombre: ${info.pushname}`);
+      console.log('📱 ========================================');
+      console.log('\n💡 CÓMO PROBAR EL BOT:');
+      console.log('   1. Abre WhatsApp en tu teléfono');
+      console.log('   2. Envía un mensaje a este número o a ti mismo');
+      console.log('   3. Escribe: "hola" o "publicar"');
+      console.log('   4. El bot responderá automáticamente\n');
+    } catch (error) {
+      console.log('⚠️  No se pudo obtener info del número');
+    }
 
     // Inicializar el bot conversacional
     conversationalBot.initializeBot(client);
