@@ -29,7 +29,10 @@ function initializeBot(whatsappClient) {
   console.log('🤖 ========================================\n');
 
   // Escuchar mensajes entrantes
+  console.log('🔧 Registrando listener de mensajes...');
+
   whatsappClient.on('message', async (message) => {
+    console.log('🔔 EVENTO MESSAGE DISPARADO'); // Log básico para ver si el evento llega
     try {
       await handleMessage(message);
     } catch (error) {
@@ -37,6 +40,8 @@ function initializeBot(whatsappClient) {
       await message.reply('❌ Ocurrió un error. Por favor intenta de nuevo escribiendo "hola".');
     }
   });
+
+  console.log('✅ Listener de mensajes registrado correctamente');
 }
 
 /**
