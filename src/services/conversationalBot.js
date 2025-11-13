@@ -2,7 +2,8 @@ const path = require('path');
 const fs = require('fs');
 const { MessageMedia } = require('whatsapp-web.js');
 const speechToText = require('./speechToText');
-const whatsappService = require('./whatsappService');
+// No importar whatsappService para evitar dependencia circular
+// La función publishStatus se pasará como parámetro
 
 // Estados de la conversación
 const STATES = {
@@ -18,11 +19,17 @@ const userStates = new Map();
 // Almacenar datos temporales de cada usuario
 const userData = new Map();
 
+// Almacenar la función publishStatus para evitar dependencia circular
+let publishStatusFunction = null;
+
 /**
  * Inicializa el bot conversacional
  * @param {Client} whatsappClient - Cliente de WhatsApp
+ * @param {Function} publishStatus - Función para publicar en estados de WhatsApp
  */
-function initializeBot(whatsappClient) {
+function initializeBot(whatsappClient, publishStatus) {
+  // Guardar la función publishStatus
+  publishStatusFunction = publishStatus;
   console.log('\n🤖 ========================================');
   console.log('🤖 BOT CONVERSACIONAL INICIADO');
   console.log('🤖 Esperando mensajes...');
@@ -284,7 +291,7 @@ async function handleWaitingForDescription(message, userId) {
 
     // Publicar en el estado
     try {
-      await whatsappService.publishStatus(data.imagePath, description);
+      await publishStatusFunction(data.imagePath, description);
 
       // Limpiar datos temporales
       if (fs.existsSync(data.imagePath)) {

@@ -63,8 +63,8 @@ async function initialize() {
       console.log('⚠️  No se pudo obtener info del número');
     }
 
-    // Inicializar el bot conversacional
-    conversationalBot.initializeBot(client);
+    // Inicializar el bot conversacional, pasando publishStatus para evitar dependencia circular
+    conversationalBot.initializeBot(client, publishStatus);
   });
 
   // Evento: Autenticación exitosa
