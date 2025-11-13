@@ -49,10 +49,11 @@ async function handleMessage(message) {
     return;
   }
 
-  // Ignorar mensajes propios
-  if (message.fromMe) {
-    return;
-  }
+  // TEMPORAL: Comentado para testing - permitir mensajes propios
+  // TODO: Descomentar esto en producción
+  // if (message.fromMe) {
+  //   return;
+  // }
 
   const userId = message.from;
   const currentState = userStates.get(userId) || STATES.IDLE;
